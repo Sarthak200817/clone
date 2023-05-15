@@ -79,367 +79,7 @@ client.on("ready", async () => {
   const channelS= client.channels.cache.get('1103960204007182338');
   channelS.send(`Welcome ${member.displayName}, you are one of ${member.guild.memberCount} members in our server `);
  });
- client.on('guildMemberRemove',(member)=>{
-  members.removeName(member.displayName);
-  console.log(member.displayName)
-  const channelS= client.channels.cache.get('1103960204007182338');
-  channelS.send(`${member.displayName} left, we stand with only ${member.guild.memberCount} people`);
- });
- client.on('guildBanAdd',(Ban)=>{
-  members.removeName(Ban.user.username);
-  const member=Ban.user;
-const channelS= client.channels.cache.get('1103960204007182338');
-channelS.send(`${Ban.user.username} was banned by  due to reasons , we are better with ${Ban.guild.memberCount} people`);
- });
 //commands
-
-client.on('messageCreate',async (message)=>{
-  if(message.content.startsWith(prefix)===true){
-    var cmd=message.content.replace(prefix,"");
-    const permissions = message.member.permissions;
-    const roleIndex = message.member.roles.highest.position;
-    const mention = message.mentions.members.first();
-    const avatar = message.author.displayAvatarURL({ format: 'png', dynamic: true, size: 128 });
-    const Wmention=cmd.replace("kick ","");
-    if(cmd.startsWith("kick ")){
-      if(permissions.has('KickMembers')){
-      // Check if a member was actually mentioned
-      if (!mention) {
-        const embed1= new EmbedBuilder()
-  .setTitle('Invalid User')
-  .setDescription(`Please mention a valid user as ${Wmention} is not one`)
-  .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-  .setColor('Red');
-  interaction.reply({embeds:[embed1]});
-        return;
-      }
-
-      else{
-       // const mention = message.mentions.members.first();
-        const mRoleIndex=mention.roles.highest.position;
-        if(mRoleIndex>=roleIndex){
-          const embed2= new EmbedBuilder()
-  .setTitle("Can't kick this user" )
-  .setDescription(`You can't kick ${mention.displayName} `)
-  .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-  .setColor('Red');
-  interaction.reply({embeds:[embed2]});
-        }
-        else{
-          try{
-         await mention.kick();
-          const embed1= new EmbedBuilder()
-  .setTitle('Kick succesful')
-  .setDescription(`Succesfully kicked ${mention.displayName}`)
-  .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-  .setColor('Green');
-  interaction.reply({embeds:[embed1]});
-          }
-          catch(error){
-            const embed1= new EmbedBuilder()
-  .setTitle('Kick unsuccesful')
-  .setDescription(`I can't kick that user, ${mention.displayName} is too powerful`)
-  .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-  .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
-  .setColor('Red');
-  interaction.reply({embeds:[embed1]});
-          }
-        }
-      }
-     
-     }
-     else{
-      const embed1= new EmbedBuilder()
-  .setTitle("You can't kick users ")
- .setDescription(`-_-`)
-  .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-  .setImage('https://media.tenor.com/fbWWeaUTKn0AAAAM/weak-weakness.gif')
-  .setColor('Red');
-  interaction.reply({embeds:[embed1]});
-     }
-    }
-    if(cmd.startsWith("ban ")===true){
-      if(permissions.has('BanMembers')){
-        // Check if a member was actually mentioned
-        if (!mention) {
-          const embed2= new EmbedBuilder()
-          .setTitle('Invalid User')
-          .setDescription(`Please mention a valid user as ${Wmention} is not one`)
-          .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-          .setColor('Red');
-  interaction.reply({embeds:[embed2]});
-          return;
-        }
-  
-        else{
-         // const mention = message.mentions.members.first();
-          const mRoleIndex=mention.roles.highest.position;
-          if(mRoleIndex>=roleIndex){
-            const embed2= new EmbedBuilder()
-          .setTitle(`You can't ban ${mention.displayName}`)
-          .setDescription(`${mention.displayName} cannot be banned by you`)
-          .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-          .setColor('Red');
-  interaction.reply({embeds:[embed2]});
-          }
-          else{
-            try{
-            await mention.ban();
-             const embed2= new EmbedBuilder()
-             .setTitle('Ban succesful')
-             .setDescription(`Succesfully banned ${mention.displayName}`)
-             .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-             .setColor('Green');
-     interaction.reply({embeds:[embed2]});
-            }
-            catch(error){
-              const embed1= new EmbedBuilder()
-  .setTitle('Ban unsuccesful')
-  .setDescription(`I can't ban that user, ${mention.displayName} is too powerful`)
-  .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-  .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
-  .setColor('Red');
-  interaction.reply({embeds:[embed1]});
-            }
-          }
-        }
-       
-       }
-       else{
-        const embed1= new EmbedBuilder()
-  .setTitle("You can't ban users ")
- .setDescription(`-_-`)
-  .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-  .setImage('https://media.tenor.com/fbWWeaUTKn0AAAAM/weak-weakness.gif')
-  .setColor('Red');
-  interaction.reply({embeds:[embed1]});
-       }
-    }
-    if(cmd.startsWith("mute ")===true){
-        var wuser=Wmention.replace(mention,"");
-        wuser=wuser.split(" ")[0];
-        const muteRole="1105393012021919764"
-      const mute = message.guild.roles.cache.find(role => role.id === muteRole);
-
-      if(permissions.has('MuteMembers')){
-        // Check if a member was actually mentioned
-
-        if (!mention) {
-          const embed2= new EmbedBuilder()
-             .setTitle('Invalid user')
-             .setDescription(`Please mention a valid user as ${wuser} is not one`)
-             .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-             .setColor('Red');
-     interaction.reply({embeds:[embed2]});
-          return;
-        }
-  
-        else{
-         // const mention = message.mentions.members.first();
-          const mRoleIndex=mention.roles.highest.position;
-          if(mRoleIndex>=roleIndex){
-            const embed2= new EmbedBuilder()
-             .setTitle("You can't mute  this user")
-             .setDescription(`You caan't mute ${mention.displayName}`)
-             .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-             .setColor('Red');
-     interaction.reply({embeds:[embed2]});
-          }
-          else{
-            var time=cmd.replace("mute ","");
-        time=time.replace(mention,"");
-        time=time.trimEnd();
-        const t1=time;
-        if(time.endsWith("s")){
-          time = parseInt(time)*1000;
-          try{
-          mention.roles.add(mute).then(()=>{
-            const embed2= new EmbedBuilder()
-             .setTitle('Mute succesful')
-             .setDescription(`Succesfully muted ${mention.displayName} by ${message.author.username} for ${t1}`)
-             .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-             .setColor('Green');
-     interaction.reply({embeds:[embed2]});
-          });
-          setTimeout(function(){
-            if(mention.roles.cache.some(role=> role.id==mute)){
-             mention.roles.remove(mute)
-             .then(()=>{
-              const embed2= new EmbedBuilder()
-             .setTitle('Unmuted')
-             .setDescription(`Unmuted ${mention.displayName}`)
-             .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-     interaction.reply({embeds:[embed2]});
-            })
-            }
-          },time)}
-          catch(error){
-            const embed2= new EmbedBuilder()
-            .setTitle('Mute unsuccesful')
-            .setDescription(`I can't mute that user, ${mention.displayName} is too powerful`)
-            .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-            .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
-            .setColor('Red')
-            interaction.reply({embeds:[embed2]});
-          }
-        }
-        else if(time.endsWith("m")){
-          time=parseInt(time)*60*1000;
-          try{
-            mention.roles.add(mute).then(()=>{
-              const embed2= new EmbedBuilder()
-               .setTitle('Mute succesful')
-               .setDescription(`Succesfully muted ${mention.displayName} by ${message.author.username} for ${t1}`)
-               .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-               .setColor('Green');
-       interaction.reply({embeds:[embed2]});
-            });
-            setTimeout(function(){
-              if(mention.roles.cache.some(role=> role.id==mute)){
-               mention.roles.remove(mute)
-               .then(()=>{
-                const embed2= new EmbedBuilder()
-               .setTitle('Unmuted')
-               .setDescription(`Unmuted ${mention.displayName}`)
-               .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-       interaction.reply({embeds:[embed2]});
-              })
-              }
-            },time)}
-            catch(error){
-              const embed2= new EmbedBuilder()
-              .setTitle('Mute unsuccesful')
-              .setDescription(`I can't mute that user, ${mention.displayName} is too powerful`)
-              .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-              .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
-              .setColor('Red')
-              interaction.reply({embeds:[embed2]});
-            }
-        }
-        else if(time.endsWith("h")){
-          time=parseInt(time)*60*60*1000;
-          try{
-            mention.roles.add(mute).then(()=>{
-              const embed2= new EmbedBuilder()
-               .setTitle('Mute succesful')
-               .setDescription(`Succesfully muted ${mention.displayName} by ${message.author.username} for ${t1}`)
-               .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-               .setColor('Green');
-       interaction.reply({embeds:[embed2]});
-            });
-            setTimeout(function(){
-              if(mention.roles.cache.some(role=> role.id==mute)){
-               mention.roles.remove(mute)
-               .then(()=>{
-                const embed2= new EmbedBuilder()
-               .setTitle('Unmuted')
-               .setDescription(`Unmuted ${mention.displayName}`)
-               .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-       interaction.reply({embeds:[embed2]});
-              })
-              }
-            },time)}
-            catch(error){
-              const embed2= new EmbedBuilder()
-              .setTitle('Mute unsuccesful')
-              .setDescription(`I can't mute that user, ${mention.displayName} is too powerful`)
-              .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-              .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
-              .setColor('Red')
-              interaction.reply({embeds:[embed2]});
-            }
-        }
-        else {
-          try{
-         mention.roles.add(mute).then(()=>{
-          const embed2= new EmbedBuilder()
-             .setTitle('Mute succesful')
-             .setDescription(`Succesfully muted ${mention.displayName} by ${message.author.username} }`)
-             .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-             .setColor('Green');
-     interaction.reply({embeds:[embed2]});
-        });
-      }
-      catch(error){
-        const embed2= new EmbedBuilder()
-              .setTitle('Mute unsuccesful')
-              .setDescription(`I can't mute that user, ${mention.displayName} is too powerful`)
-              .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-              .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
-              .setColor('Red')
-              interaction.reply({embeds:[embed2]});
-      }
-        }
-
-
-            /*try{
-            await mention.ban();
-             message.channel.send(`Succesfully banned ${mention}`);
-            }
-            catch(error){
-              message.channel.send("Failed to ban user");
-            }
-          }
-        }
-               
-       }*/
-      }
-        }
-      }
-       else{
-        message.channel.send("You can't mute users")
-       }
-    }
- if(cmd.startsWith("unmute ")){
-  const muteRole="1105393012021919764";
-      const mute = message.guild.roles.cache.find(role => role.id === muteRole);
-  if(permissions.has('MuteMembers')){
-     if(!mention){
-      const embed2= new EmbedBuilder()
-      .setTitle('Invalid user')
-      .setDescription(`Please mention a valid use as ${Wmention} is not one`)
-      .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-      .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
-      .setColor('Red')
-      interaction.reply({embeds:[embed2]});
-     }else{
-      if(mention.roles.cache.some(role=> role.id==mute)){
-        mention.roles.remove(mute).then(()=>{
-          const embed=new EmbedBuilder()
-          .setTitle("Unmute succesful")
-          .setDescription(`Succesfully unmuted ${mention.displayName}`)
-          .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-      .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
-      .setColor('Red')
-      interaction.reply({embeds:[embed]});
-        })
-      }
-      else{
-        const embed=new EmbedBuilder()
-          .setTitle("Unmuting the unmuted")
-          .setDescription(`Bruh`)
-          .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-      .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
-      .setColor('Orange')
-      interaction.reply({embeds:[embed]});
-      }
-     }
-  }
-  else{
-    const embed=new EmbedBuilder()
-    .setTitle("You can't unmute people")
-    .setDescription(`You dont'have the permission to unmute`)
-    .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
-.setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
-.setColor('Red')
-interaction.reply({embeds:[embed]});
-  }
- }
-    
- 
-}
-  
-})
 const badWords=["fuck", "suck","sex","pussy","cum","squirt","nigg","bitch"];
 var used=false;
 function containsBadWords(msg){
@@ -472,7 +112,7 @@ console.log("Bad words found: " + result.usedWords.join(", "));
 console.log("Number of bad words: " + result.numUsedWords);
 console.log("Contains bad words: " + result.used);
 */
-
+var reason
 client.on('messageCreate',(message)=>{
   const result = containsBadWords(message.content);
   if(message.author.bot)return;
@@ -551,7 +191,7 @@ client.on('interactionCreate', async (interaction) => {
       const roleIndex = mem.roles.highest.position;
       const mRoleIndex = mention.roles.highest.position;
     if (permission.has('BanMembers')) {
-      var reason=interaction.options.get('reason')?.value;
+       reason=interaction.options.get('reason')?.value;
       if (mRoleIndex >= roleIndex) {
         const embed2 = new EmbedBuilder()
           .setTitle(`You can't ban ${mention.displayName}`)
@@ -564,7 +204,7 @@ client.on('interactionCreate', async (interaction) => {
           if(reason===undefined){
             reason="no reason";
           }
-          //await mention.ban();
+          await mention.ban();
           const embed2 = new EmbedBuilder()
             .setTitle('Ban succesful')
             .setDescription(`Succesfully banned <@${mention.id}> for ${reason}`)
@@ -601,7 +241,7 @@ client.on('interactionCreate', async (interaction) => {
       const mRoleIndex = mention.roles.highest.position;
     if(permission.has('KickMembers')){
     // Check if a member was actually mentioned
-    var reason=interaction.options.get('reason')?.value;
+     reason=interaction.options.get('reason')?.value;
       if(mRoleIndex>=roleIndex){
         const embed2= new EmbedBuilder()
 .setTitle("Can't kick this user" )
@@ -612,7 +252,7 @@ message.reply({embeds:[embed2]});
       }
       else{
         try{
-      // await mention.kick();
+       await mention.kick();
         const embed1= new EmbedBuilder()
 .setTitle('Kick succesful')
 .setDescription(`Succesfully kicked <@${mention.id}> for ${reason}`)
@@ -882,3 +522,15 @@ const muteroleId = muteRoles[guild.id];
   }
 }}
 })
+client.on('guildMemberRemove',(member)=>{
+  members.removeName(member.displayName);
+  console.log(member.displayName)
+  const channelS= client.channels.cache.get('1103960204007182338');
+  channelS.send(`${member.displayName} left for ${reason}, we stand with only ${member.guild.memberCount} people`);
+ });
+ client.on('guildBanAdd',(Ban)=>{
+  members.removeName(Ban.user.username);
+  const member=Ban.user;
+const channelS= client.channels.cache.get('1103960204007182338');
+channelS.send(`${Ban.user.username} was banned due to ${reason} , we are better with ${Ban.guild.memberCount} people`);
+ });
