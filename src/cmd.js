@@ -72,7 +72,11 @@ const rest=new REST({version:'10'}).setToken(DISCORDJS_BOT_TOKEN);
     try {
         console.log("Registring commands")
         await rest.put(
+<<<<<<< HEAD
             Routes.applicationGuildCommands(c),
+=======
+            Routes.applicationCommands(c),
+>>>>>>> e1d9565c82470aeb1dcec8f6b5b3a4d3cb2c5427
             {body:cmds}
         )
         console.log("registered commands")
