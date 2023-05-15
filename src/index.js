@@ -122,7 +122,10 @@ client.on('messageCreate',(message)=>{
     .setDescription(`You used ${result.usedWords.join(", ")}`)
     .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
  .setColor('Red')
-message.reply({embeds:[embed]})
+message.reply({embeds:[embed]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
   }
 })
 
@@ -154,7 +157,7 @@ client.on('interactionCreate', async (interaction) => {
   
   if (!interaction.isCommand()) return;
 
-  if (interaction.commandName === 'muterole') {
+  if (interaction.commandName === 'setmuterole') {
     if (permission.has('ManageMembers')) {
       const muteRoleId = interaction.options.get('role').value;
       const muteRole = guild.roles.cache.get(muteRoleId);
@@ -168,7 +171,10 @@ client.on('interactionCreate', async (interaction) => {
         .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
         .setColor('Green');
         
-      message.reply({ embeds: [embed2] });
+      message.reply({ embeds: [embed2] }).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
     } else {
       const embed2 = new EmbedBuilder()
         .setTitle(`You can't set mute role`)
@@ -176,7 +182,10 @@ client.on('interactionCreate', async (interaction) => {
         .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
         .setColor('Red');
         
-      message.reply({ embeds: [embed2] });
+      message.reply({ embeds: [embed2] }).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
     }
   }
   
@@ -198,7 +207,10 @@ client.on('interactionCreate', async (interaction) => {
           .setDescription(`<@${mention.id}> cannot be banned by you`)
           .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
           .setColor('Red');
-        message.reply({ embeds: [embed2] });
+        message.reply({ embeds: [embed2] }).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
       } else {
         try {
           if(reason===undefined){
@@ -210,7 +222,10 @@ client.on('interactionCreate', async (interaction) => {
             .setDescription(`Succesfully banned <@${mention.id}> for ${reason}`)
             .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
             .setColor('Green');
-          message.reply({ embeds: [embed2] });
+          message.reply({ embeds: [embed2] }).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
         } catch (error) {
           console.log(error);
           const embed1 = new EmbedBuilder()
@@ -219,7 +234,7 @@ client.on('interactionCreate', async (interaction) => {
             .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
             .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
             .setColor('Red');
-          message.reply({ embeds: [embed1] });
+          message.reply({ embeds: [embed1] }).catch(console.error,interaction.channel.send("The bot took to long to respond"));
         }
       }
     } else {
@@ -229,7 +244,10 @@ client.on('interactionCreate', async (interaction) => {
         .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
         .setImage('https://media.tenor.com/fbWWeaUTKn0AAAAM/weak-weakness.gif')
         .setColor('Red');
-      message.reply({ embeds: [embed1] });
+      message.reply({ embeds: [embed1] }).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
     }
   }
   if(interaction.commandName==='kick'){
@@ -248,7 +266,10 @@ client.on('interactionCreate', async (interaction) => {
 .setDescription(`You can't kick <@${mention.id}> `)
 .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
 .setColor('Red');
-message.reply({embeds:[embed2]});
+message.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
       }
       else{
         try{
@@ -258,7 +279,10 @@ message.reply({embeds:[embed2]});
 .setDescription(`Succesfully kicked <@${mention.id}> for ${reason}`)
 .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
 .setColor('Green');
-message.reply({embeds:[embed1]});
+message.reply({embeds:[embed1]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
         }
         catch(error){
           const embed1= new EmbedBuilder()
@@ -267,7 +291,10 @@ message.reply({embeds:[embed1]});
 .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
 .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
 .setColor('Red');
-message.reply({embeds:[embed1]});
+message.reply({embeds:[embed1]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
         }
       }
     
@@ -280,7 +307,10 @@ message.reply({embeds:[embed1]});
 .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
 .setImage('https://media.tenor.com/fbWWeaUTKn0AAAAM/weak-weakness.gif')
 .setColor('Red');
-message.reply({embeds:[embed1]});
+message.reply({embeds:[embed1]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
    }
 }
 if(interaction.commandName==='mute'){
@@ -301,10 +331,13 @@ if(interaction.commandName==='mute'){
   if(!muteRole){
       const embed2 = new EmbedBuilder()
       .setTitle(`Mute role hasn't been set`)
-      .setDescription(`Please use /muterole to set it`)
+      .setDescription(`Please use /setmuterole to set it`)
       .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
       .setColor('Red');
-    message.reply({ embeds: [embed2] });
+    message.reply({ embeds: [embed2] }).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
     return;
   }
   if (!interaction || interaction.expired) {
@@ -320,7 +353,10 @@ if(interaction.commandName==='mute'){
          .setDescription(`You can't mute <@${mention.id}>`)
          .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
          .setColor('Red');
- interaction.reply({embeds:[embed2]});
+ interaction.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
       }
       else{
         
@@ -332,7 +368,10 @@ if(interaction.commandName==='mute'){
       .setDescription(`Succesfully muted <@${mention.id}> by ${message.user.username}`)
       .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
       .setColor('Green');
-interaction.reply({embeds:[embed2]});
+interaction.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
       })
     }
     else{
@@ -345,7 +384,10 @@ interaction.reply({embeds:[embed2]});
          .setDescription(`Succesfully muted <@${mention.id}> by ${message.user.username} for ${t1}`)
          .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
          .setColor('Green');
- interaction.reply({embeds:[embed2]});
+ interaction.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
       });
       setTimeout(function(){
         if(mention.roles.cache.some(role=> role.id==muteRoleId)){
@@ -355,7 +397,10 @@ interaction.reply({embeds:[embed2]});
          .setTitle('Unmuted')
          .setDescription(`Unmuted ${mention.displayName}`)
          .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
- message.channel.send({embeds:[embed2]});
+ message.channel.send({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
         })
         }
       },time)}
@@ -366,7 +411,10 @@ interaction.reply({embeds:[embed2]});
         .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
         .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
         .setColor('Red')
-        interaction.reply({embeds:[embed2]});
+        interaction.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
       }
     }
     else if(time.endsWith("m")){
@@ -378,7 +426,10 @@ interaction.reply({embeds:[embed2]});
            .setDescription(`Succesfully muted ${mention.displayName} by ${message.user.username} for ${t1}`)
            .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
            .setColor('Green');
-   interaction.reply({embeds:[embed2]});
+   interaction.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
         });
         setTimeout(function(){
           if(mention.roles.cache.some(role=> role.id==muteRoleId)){
@@ -388,7 +439,10 @@ interaction.reply({embeds:[embed2]});
            .setTitle('Unmuted')
            .setDescription(`Unmuted ${mention.displayName}`)
            .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
-   message.channel.reply({embeds:[embed2]});
+   message.channel.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
           })
           }
         },time)}
@@ -399,7 +453,10 @@ interaction.reply({embeds:[embed2]});
           .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
           .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
           .setColor('Red')
-          interaction.reply({embeds:[embed2]});
+          interaction.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
         }
     }
     else if(time.endsWith("h")){
@@ -411,7 +468,10 @@ interaction.reply({embeds:[embed2]});
            .setDescription(`Succesfully muted ${mention.displayName} by ${message.user.username} for ${t1}`)
            .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
            .setColor('Green');
-   interaction.reply({embeds:[embed2]});
+   interaction.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
         });
         setTimeout(function(){
           if(mention.roles.cache.some(role=> role.id==muteRoleId)){
@@ -421,7 +481,10 @@ interaction.reply({embeds:[embed2]});
            .setTitle('Unmuted')
            .setDescription(`Unmuted ${mention.displayName}`)
            .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
-   message.channel.send({embeds:[embed2]});
+   message.channel.send({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
           })
           }
         },time)}
@@ -432,7 +495,10 @@ interaction.reply({embeds:[embed2]});
           .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
           .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
           .setColor('Red')
-          interaction.reply({embeds:[embed2]});
+          interaction.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
         }
     }
     else {
@@ -443,7 +509,10 @@ interaction.reply({embeds:[embed2]});
          .setDescription(`Succesfully muted ${mention.displayName} by ${message.user.username} }`)
          .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
          .setColor('Green');
- interaction.reply({embeds:[embed2]});
+ interaction.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
     });
   }
   catch(error){
@@ -453,7 +522,10 @@ interaction.reply({embeds:[embed2]});
           .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
           .setImage('https://staticg.sportskeeda.com/editor/2022/04/8e856-16505616347217-1920.jpg')
           .setColor('Red')
-          interaction.reply({embeds:[embed2]});
+          interaction.reply({embeds:[embed2]}).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
   }
     }}
   }
@@ -465,17 +537,23 @@ interaction.reply({embeds:[embed2]});
     .setDescription(`-_-`)
     .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
     .setColor('Red');
-  message.reply({ embeds: [embed2] });
+  message.reply({ embeds: [embed2] }).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
    }
 
   }
   else if(muteRoleset===false){
     const embed2 = new EmbedBuilder()
     .setTitle(`Mute role hasn't been set`)
-    .setDescription(`Please use /muterole to set it`)
+    .setDescription("Please use `/setmuterole` to set it")
     .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
     .setColor('Red');
-  message.reply({ embeds: [embed2] });
+  message.reply({ embeds: [embed2] }).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
   }
 }
 if (interaction.commandName === "unmute") {
@@ -488,10 +566,13 @@ const muteroleId = muteRoles[guild.id];
   if (!muteRole) {
     const embed2 = new EmbedBuilder()
       .setTitle(`Mute role hasn't been set`)
-      .setDescription("Please use `/muterole` to set it")
+      .setDescription("Please use `/setmuterole` to set it")
       .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
       .setColor('Red');
-    message.reply({ embeds: [embed2] });
+    message.reply({ embeds: [embed2] }).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
   }
  else {
   if (permission.has('MuteMembers')) {
@@ -502,7 +583,10 @@ const muteroleId = muteRoles[guild.id];
           .setDescription(`Successfully unmuted ${mention.displayName}`)
           .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
           .setColor('Green');
-        interaction.reply({ embeds: [embed] });
+        interaction.reply({ embeds: [embed] }).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
       });
     } else {
       const embed = new EmbedBuilder()
@@ -510,7 +594,10 @@ const muteroleId = muteRoles[guild.id];
         .setDescription(`Bruh`)
         .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
         .setColor('Orange');
-      interaction.reply({ embeds: [embed] });
+      interaction.reply({ embeds: [embed] }).catch(error => {
+    console.error(error);
+    message.channel.send("The application took too long to respond.");
+  });
     }
   } else {
     const embed2 = new EmbedBuilder()
@@ -518,7 +605,7 @@ const muteroleId = muteRoles[guild.id];
       .setDescription(`You can't unmute users`)
       .setAuthor({ name: message.user.username, iconURL: message.user.displayAvatarURL() })
       .setColor('Red');
-    message.reply({ embeds: [embed2] });
+    message.reply({ embeds: [embed2] }).catch(console.error,message.channel.send("The application took too long to respond"));
   }
 }}
 })
