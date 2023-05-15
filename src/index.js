@@ -63,7 +63,7 @@ const client = new Client({
 
 const prefix="$";
 const members=new Members();
-client.login(DISCORDJS_BOT_TOKEN);
+client.login(process.env.DISCORDJS_BOT_TOKEN);
 client.on("ready", async () => {
   console.log(`Logged in as ${client.user.tag}`);
 
