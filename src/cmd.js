@@ -66,13 +66,13 @@ const cmds=[{
     }]
 },
 ];
-const rest=new REST({version:'10'}).setToken(process.env.DISCORDJS_BOT_TOKEN);
+const rest=new REST({version:'10'}).setToken(DISCORDJS_BOT_TOKEN);
 
 (async()=>{
     try {
         console.log("Registring commands")
         await rest.put(
-            Routes.applicationCommands(process.env.c),
+            Routes.applicationCommands(c),
             {body:cmds}
         )
         console.log("registered commands")
