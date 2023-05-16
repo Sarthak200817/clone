@@ -1,6 +1,6 @@
-const { Client, Intents } = require("discord.js");
+const { Client, GatewayIntentBits, Partials , EmbedBuilder} = require("discord.js");
 const client = new Client({
- intents: [
+  intents: [
     GatewayIntentBits.DirectMessages,
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildBans,
@@ -9,7 +9,8 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.GuildMembers,
-  ]
+  ],
+  partials: [Partials.Channel, Partials.Message, Partials.Reaction],
 });
 
 client.on("ready", () => {
